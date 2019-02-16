@@ -2,23 +2,31 @@ package com.gameapp.web.mywebviewgamb;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebChromeClient;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
 import android.widget.ProgressBar;
 
-public class MyWebViewGamb extends WebView {
-    WebSettings mySettings;
-    MyWebViewClient myWebViewClient;
-    MyWebChromeClient myWebChromeClient;
+public class MyWebViewGamb{
+    private WebView webView;
 
     @SuppressLint("SetJavaScriptEnabled")
-    public MyWebViewGamb(Context context, AppCompatActivity myAppCompatActivity, ProgressBar pB) {
-        super(context);
+    MyWebViewGamb(WebView webView,
+                  Context context,
+                  AppCompatActivity myAppCompatActivity,
+                  ProgressBar pB,
+                  ValueCallback<Uri> mUploadMessage,
+                  ValueCallback<Uri[]> uploadMessage,
+                  int REQUEST_SELECT_FILE,
+                  int FILECHOOSER_RESULTCODE) {
 
-        mySettings = this.getSettings();
+        this.webView = webView;
+
+        WebSettings mySettings = this.webView.getSettings();
+
         mySettings.setJavaScriptEnabled(true);
         mySettings.setDomStorageEnabled(true);
         mySettings.setPluginState(WebSettings.PluginState.ON);
@@ -28,19 +36,17 @@ public class MyWebViewGamb extends WebView {
         mySettings.setBuiltInZoomControls(true);
         mySettings.setDisplayZoomControls(false);
 
-        this.myWebViewClient = new MyWebViewClient(pB);
-        this.myWebChromeClient = new MyWebChromeClient(context, myAppCompatActivity);
-
+        this.webView.setWebViewClient(new MyWebViewClient(pB));
+        this.webView.setWebChromeClient(new MyWebChromeClient(context,
+                myAppCompatActivity,
+                mUploadMessage,
+                uploadMessage,
+                REQUEST_SELECT_FILE,
+                FILECHOOSER_RESULTCODE));
 
     }
 
-    @Override
-    public void setWebViewClient(WebViewClient client) {
-        super.setWebViewClient(this.myWebViewClient);
-    }
-
-    @Override
-    public void setWebChromeClient(WebChromeClient client) {
-        super.setWebChromeClient(this.myWebChromeClient);
+    public WebView getWebView() {
+        return webView;
     }
 }

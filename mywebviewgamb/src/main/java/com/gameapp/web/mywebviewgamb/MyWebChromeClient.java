@@ -18,13 +18,23 @@ public class MyWebChromeClient extends WebChromeClient {
     private AppCompatActivity myAppCompatActivity;
 
     private ValueCallback<Uri> mUploadMessage;
-    public ValueCallback<Uri[]> uploadMessage;
-    public static final int REQUEST_SELECT_FILE = 100;
-    private final static int FILECHOOSER_RESULTCODE = 1;
+    private ValueCallback<Uri[]> uploadMessage;
+    private int REQUEST_SELECT_FILE;
+    private int FILECHOOSER_RESULTCODE;
 
-    MyWebChromeClient(Context context, AppCompatActivity myAppCompatActivity){
+    MyWebChromeClient(Context context,
+                      AppCompatActivity myAppCompatActivity,
+                      ValueCallback<Uri> mUploadMessage,
+                      ValueCallback<Uri[]> uploadMessage,
+                      int REQUEST_SELECT_FILE,
+                      int FILECHOOSER_RESULTCODE){
+
         this.context = context;
         this.myAppCompatActivity = myAppCompatActivity;
+        this.mUploadMessage = mUploadMessage;
+        this.uploadMessage = uploadMessage;
+        this.REQUEST_SELECT_FILE = REQUEST_SELECT_FILE;
+        this.FILECHOOSER_RESULTCODE = FILECHOOSER_RESULTCODE;
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public boolean onShowFileChooser(WebView mWebView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams)
