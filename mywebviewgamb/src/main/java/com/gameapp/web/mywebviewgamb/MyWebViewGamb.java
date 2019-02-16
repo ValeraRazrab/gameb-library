@@ -14,7 +14,7 @@ public class MyWebViewGamb{
     private WebView webView;
 
     @SuppressLint("SetJavaScriptEnabled")
-    MyWebViewGamb(WebView webView,
+    public MyWebViewGamb(WebView webView,
                   Context context,
                   AppCompatActivity myAppCompatActivity,
                   ProgressBar pB,
