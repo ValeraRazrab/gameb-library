@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    MainActivity(Context c, String message){
+    public MainActivity(Context c, String message){
         Toast.makeText(c,message, Toast.LENGTH_SHORT).show();
     }
 
